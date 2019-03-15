@@ -2,10 +2,10 @@ Cinema = require('../models/cinema');
 const db = require('../utils/DataBaseUtils');
 
 
-
 function cinema_list_get(req, res) {
   db.listCinemas()
     .then(data => {
+      console.log(data);
       res.send(data)
     })
     .catch(err => {
@@ -16,10 +16,12 @@ function cinema_list_get(req, res) {
 }
 
 
-function cinema_find_byid(req, res) {
-  db.findByCinemaid(req.params.id)
+function cinema_find_by_id(req, res) {
+  db.findByCinemaName(req.params.id)
     .then(data => {
+      console.log(req.params.id);
       res.end(data);
+
     })
     .catch(err => {
       res.json({
@@ -31,7 +33,7 @@ function cinema_find_byid(req, res) {
 
 module.exports = {
   cinema_list_get,
-  cinema_find_byid
+  cinema_find_by_id
 }
 
 

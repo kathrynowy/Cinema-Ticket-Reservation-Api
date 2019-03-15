@@ -11,10 +11,13 @@ const CinemaSchema = new Schema({
     required: true,
     default: ''
   },
-  halls: {
-    type: Array,
-    default: []
-  }
+  halls: [
+    {
+      id: Number
+    }
+  ]
+
+
 });
 
 module.exports = mongoose.model('Cinema', CinemaSchema);

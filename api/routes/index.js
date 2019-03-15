@@ -5,7 +5,7 @@ module.exports = function (app) {
     .get(cinemaController.cinema_list_get)
 
   app.route('cinemas/:id')
-    .put(cinemaController.cinema_find_byid)
+    .get(cinemaController.cinema_find_by_id)
 
 }
 
