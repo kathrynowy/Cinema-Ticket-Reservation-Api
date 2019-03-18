@@ -1,6 +1,7 @@
 module.exports = function (app) {
   const cinemaController = require('../controllers/cinemaController');
   const movieController = require('../controllers/movieController');
+  const sessionController = require('../controllers/sessionController');
 
   app.route('/cinemas')
     .get(cinemaController.listСinemas)
@@ -19,5 +20,14 @@ module.exports = function (app) {
     .get(movieController.readMovie)
     .put(movieController.updateMovie)
     .delete(movieController.deleteMovie);
+
+  app.route('/sessions')
+    .get(sessionController.listSessions)
+    .post(sessionController.createSession);
+
+  app.route('/sessions/:id')
+    .get(sessionController.readSession)
+    .put(sessionController.updateSession)
+    .delete(sessionController.deleteSession);
 }
 
