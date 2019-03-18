@@ -2,14 +2,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./api/routes/index');
+const cors = require('cors');
 
 const app = express();
 const db = require('./api/utils/DataBaseUtils').setUpConnection();
-
+const Cinema = require('./api/models/cinema');
+const Movie = require('./api/models/movie');
 mongoose.Promise = global.Promise;
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 
 routes(app);
@@ -17,4 +21,4 @@ routes(app);
 const port = 8080;
 app.listen(port);
 
-console.log('todo list RESTful API server started on: ' + port);
+console.log('server started on: ' + port);
