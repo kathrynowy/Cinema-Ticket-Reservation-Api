@@ -3,6 +3,7 @@ module.exports = function (app) {
   const movieController = require('../controllers/movieController');
   const sessionController = require('../controllers/sessionController');
   const hallController = require('../controllers/hallController');
+  const additionalServiceController = require('../controllers/additionalServiceController');
 
   app.route('/cinemas')
     .get(cinemaController.listСinemas)
@@ -39,5 +40,14 @@ module.exports = function (app) {
     .get(hallController.readHall)
     .put(hallController.updateHall)
     .delete(hallController.deleteHall);
+
+  app.route('/additionalServices')
+    .get(additionalServiceController.listServices)
+    .post(additionalServiceController.createService);
+
+  app.route('/additionalServices/:id')
+    .get(additionalServiceController.readService)
+    .put(additionalServiceController.updateService)
+    .delete(additionalServiceController.deleteService);
 }
 
