@@ -4,6 +4,8 @@ module.exports = function (app) {
   const sessionController = require('../controllers/sessionController');
   const hallController = require('../controllers/hallController');
   const additionalServiceController = require('../controllers/additionalServiceController');
+  const ticketController = require('../controllers/ticketController');
+
 
   app.route('/cinemas')
     .get(cinemaController.listСinemas)
@@ -49,5 +51,9 @@ module.exports = function (app) {
     .get(additionalServiceController.readService)
     .put(additionalServiceController.updateService)
     .delete(additionalServiceController.deleteService);
+
+  app.route('/buyTickets')
+    .get(ticketController.listBoughtTickets)
+    .put(ticketController.buyTickets);
 }
 

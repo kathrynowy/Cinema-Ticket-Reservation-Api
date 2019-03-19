@@ -15,6 +15,7 @@ const Movie = require('./api/models/movie');
 const Session = require('./api/models/session');
 const Hall = require('./api/models/hall');
 const AdditionalService = require('./api/models/additionalService');
+const boughtTicket = require('./api/models/boughtTicket');
 mongoose.Promise = global.Promise;
 
 
