@@ -8,6 +8,7 @@ const MovieSchema = new Schema({
     required: true,
     default: ''
   },
+
   img: String,
 
   description: {
