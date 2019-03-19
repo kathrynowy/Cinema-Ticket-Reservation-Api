@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const toJson = require('@meanie/mongoose-to-json');
+
+mongoose.plugin(toJson);
+
 const routes = require('./api/routes/index');
 const cors = require('cors');
 
@@ -9,6 +13,7 @@ const db = require('./api/utils/DataBaseUtils').setUpConnection();
 const Cinema = require('./api/models/cinema');
 const Movie = require('./api/models/movie');
 const Session = require('./api/models/session');
+const Hall = require('./api/models/hall');
 mongoose.Promise = global.Promise;
 
 

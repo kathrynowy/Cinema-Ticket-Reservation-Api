@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const CinemaSchema = new Schema({
@@ -11,9 +10,10 @@ const CinemaSchema = new Schema({
 
   halls: [
     {
-      id: Number
+      id: String
     }
-  ]
+  ],
 });
+
 
 module.exports = mongoose.model('Cinema', CinemaSchema);
