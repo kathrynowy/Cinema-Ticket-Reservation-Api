@@ -11,7 +11,7 @@ const CinemaSchema = new Schema({
 
   halls: [
     {
-      id: Number
+      id: String
     }
   ],
 });
