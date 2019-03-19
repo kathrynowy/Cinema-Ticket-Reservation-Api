@@ -13,7 +13,8 @@ const CinemaSchema = new Schema({
     {
       id: Number
     }
-  ]
+  ],
 });
+
 
 module.exports = mongoose.model('Cinema', CinemaSchema);

@@ -3,11 +3,11 @@ const mongoose = require('mongoose'),
 
 
 function listСinemas(req, res) {
-  Cinema.find({}, function (err, cinema) {
+  Cinema.find({}, function (err, cinemas) {
     if (err) {
       res.send(err);
     }
-    res.json(cinema);
+    res.json(cinemas);
 
   });
 };
@@ -53,6 +53,8 @@ function deleteСinema(req, res) {
     res.json({ message: 'Cinema successfully deleted' });
   });
 };
+
+
 
 module.exports = {
   listСinemas,

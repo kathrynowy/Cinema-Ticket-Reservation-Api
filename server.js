@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const toJson = require('@meanie/mongoose-to-json');
+
+mongoose.plugin(toJson);
+
 const routes = require('./api/routes/index');
 const cors = require('cors');
 
