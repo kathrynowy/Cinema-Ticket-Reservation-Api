@@ -3,51 +3,46 @@ const mongoose = require('mongoose'),
 
 
 function listMovies(req, res) {
-  Movie.find({}, function (err, movies) {
-    if (err) {
-      res.send(err);
+  Movie.find({}, function (error, movies) {
+    if (error) {
+      res.send(error);
     }
     res.json(movies);
   });
 };
 
 function readMovie(req, res) {
-  Movie.findById(req.params.id, function (err, movie) {
-    console.log(req.params.id);
-    if (err) {
-      res.send(err);
+  Movie.findById(req.params.id, function (error, movie) {
+    if (error) {
+      res.send(error);
     }
     res.json(movie);
   });
 };
 
 function createMovie(req, res) {
-  const new_movie = new Movie(req.body);
-  new_movie.save(function (err, movie) {
-    console.log(req.params.id);
-    if (err) {
-      res.send(err);
+  const newMovie = new Movie(req.body);
+  newMovie.save(function (error, movie) {
+    if (error) {
+      res.send(error);
     }
     res.json(movie);
   });
 };
 
 function updateMovie(req, res) {
-  Movie.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, movie) {
-    if (err) {
-      res.send(err);
+  Movie.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (error, movie) {
+    if (error) {
+      res.send(error);
     }
     res.json(movie);
   });
 };
 
 function deleteMovie(req, res) {
-  Movie.remove({
-    _id: req.params.id
-  }, function (err, movie) {
-    console.log(req.params.id);
-    if (err) {
-      res.send(err);
+  Movie.remove({ id: req.params.id }, function (error) {
+    if (error) {
+      res.send(error);
     }
     res.json({ message: 'Movie successfully deleted' });
   });
