@@ -6,7 +6,7 @@ const AdditionalServiceSchema = new Schema({
   cinemaId: String,
   services: [
     {
-      name: Number,
+      name: String,
       cost: Number
     }
   ]

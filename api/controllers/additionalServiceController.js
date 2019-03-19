@@ -1,63 +1,63 @@
 const mongoose = require('mongoose'),
-  AdditionalServiceSchema = mongoose.model('AdditionalServiceSchema');
+  AdditionalService = mongoose.model('AdditionalService');
 
 
-function listСinemas(req, res) {
-  AdditionalServiceSchema.find({}, function (err, cinema) {
+function listServices(req, res) {
+  AdditionalService.find({}, function (err, services) {
     if (err) {
       res.send(err);
     }
-    res.json(cinema);
+    res.json(services);
 
   });
 };
 
-function readСinema(req, res) {
-  AdditionalServiceSchema.findById(req.params.id, function (err, cinema) {
+function readService(req, res) {
+  AdditionalService.findById(req.params.id, function (err, service) {
     console.log(req.params.id);
     if (err) {
       res.send(err);
     }
-    res.json(cinema);
+    res.json(service);
   });
 };
 
-function createСinema(req, res) {
-  const new_cinema = new AdditionalServiceSchema(req.body);
-  new_cinema.save(function (err, cinema) {
+function createService(req, res) {
+  const new_service = new AdditionalService(req.body);
+  new_service.save(function (err, service) {
     console.log(req.params.id);
     if (err) {
       res.send(err);
     }
-    res.json(cinema);
+    res.json(service);
   });
 };
 
-function updateAdditionalServiceSchema(req, res) {
-  AdditionalServiceSchema.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, cinema) {
+function updateService(req, res) {
+  AdditionalService.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, service) {
     if (err) {
       res.send(err);
     }
-    res.json(cinema);
+    res.json(service);
   });
 };
 
-function deleteСinema(req, res) {
-  AdditionalServiceSchema.remove({
+function deleteService(req, res) {
+  AdditionalService.remove({
     _id: req.params.id
-  }, function (err, cinema) {
+  }, function (err, service) {
     console.log(req.params.id);
     if (err) {
       res.send(err);
     }
-    res.json({ message: 'AdditionalServiceSchema successfully deleted' });
+    res.json({ message: 'Service successfully deleted' });
   });
 };
 
 module.exports = {
-  listAdditionalServiceSchema,
-  readAdditionalServiceSchema,
-  createAdditionalServiceSchema,
-  deleteAdditionalServiceSchema,
-  updateAdditionalServiceSchema
+  listServices,
+  readService,
+  createService,
+  deleteService,
+  updateService
 }
