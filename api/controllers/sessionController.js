@@ -3,52 +3,46 @@ const mongoose = require('mongoose'),
 
 
 function listSessions(req, res) {
-  Session.find({}, function (err, session) {
-    if (err) {
-      res.send(err);
+  Session.find({}, function (error, session) {
+    if (error) {
+      res.send(error);
     }
     res.json(session);
-
   });
 };
 
 function readSession(req, res) {
-  Session.find({ movieId: req.params.id }, function (err, session) {
-    console.log(req.params.id);
-    if (err) {
-      res.send(err);
+  Session.find({ movieId: req.params.id }, function (error, session) {
+    if (error) {
+      res.send(error);
     }
     res.json(session);
   });
 };
 
 function createSession(req, res) {
-  const new_session = new Session(req.body);
-  new_session.save(function (err, session) {
-    console.log(req.params.id);
-    if (err) {
-      res.send(err);
+  const newSession = new Session(req.body);
+  newSession.save(function (error, session) {
+    if (error) {
+      res.send(error);
     }
     res.json(session);
   });
 };
 
 function updateSession(req, res) {
-  Session.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, session) {
-    if (err) {
-      res.send(err);
+  Session.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (error, session) {
+    if (error) {
+      res.send(error);
     }
     res.json(session);
   });
 };
 
 function deleteSession(req, res) {
-  Session.remove({
-    _id: req.params.id
-  }, function (err, session) {
-    console.log(req.params.id);
-    if (err) {
-      res.send(err);
+  Session.remove({ id: req.params.id }, function (error, session) {
+    if (error) {
+      res.send(error);
     }
     res.json({ message: 'Session successfully deleted' });
   });
