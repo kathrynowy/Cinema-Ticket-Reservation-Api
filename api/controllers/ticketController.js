@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'),
-  BoughtTicket = mongoose.model('BoughtTicket');
+const mongoose = require('mongoose');
+BoughtTicket = mongoose.model('BoughtTicket');
 
 
 function listBoughtTickets(req, res) {
@@ -11,13 +11,10 @@ function listBoughtTickets(req, res) {
   });
 };
 
-function buyTickets(req, res) {
-  BoughtTicket.findByIdAndUpdate("5c910673790c625dc8ec009e", { $push: { boughtTickets: req.body.tickets[0] } },
+function buyTickets(req, res, next) {
+  BoughtTicket.findByIdAndUpdate("5c910673790c625dc8ec09e", { $push: { boughtTickets: req.body.tickets } },
     function (error, result) {
-      if (error) {
-        console.log('something wrong!')
-      }
-      console.log(result + 'ggf');
+      if (error) return next(error);
       res.json(result);
     });
 };

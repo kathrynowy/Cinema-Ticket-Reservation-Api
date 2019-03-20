@@ -3,16 +3,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BoughtTicketSchema = new Schema({
+  id: Schema.Types.ObjectId,
   boughtTickets: [
     {
-      cinemaId: String,
-      movieId: String,
-      hallId: String,
+      cinemaId: { type: Schema.Types.ObjectId, ref: 'Cinema' },
+      movieId: { type: Schema.Types.ObjectId, ref: 'Movie' },
+      hallId: { type: Schema.Types.ObjectId, ref: 'Hall' },
       time: Number,
       row: Number,
       seat: Number,
       cost: Number,
-      selectedServices: Array
+      selectedServices: {
+        type: Array,
+        default: []
+      }
     }
   ]
 });

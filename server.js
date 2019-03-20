@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const toJson = require('@meanie/mongoose-to-json');
+const errorHandlers = require('./api/errorHandlers/index');
+
 
 mongoose.plugin(toJson);
 
@@ -16,12 +18,16 @@ const Session = require('./api/models/session');
 const Hall = require('./api/models/hall');
 const AdditionalService = require('./api/models/additionalService');
 const boughtTicket = require('./api/models/boughtTicket');
+
+
 mongoose.Promise = global.Promise;
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(errorHandlers.logErrors);
+app.use(errorHandlers.errorHandler);
 
 
 routes(app);

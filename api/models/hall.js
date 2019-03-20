@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const HallSchema = new Schema({
-  cinemaId: String,
-  hallId: String,
+  cinemaId: { type: Schema.Types.ObjectId, ref: 'Cinema' },
+  id: Schema.Types.ObjectId,
   hall: [
     {
       row: Number,
