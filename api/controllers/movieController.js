@@ -4,10 +4,7 @@ const mongoose = require('mongoose'),
 
 function listMovies(req, res) {
   Movie.find({}, function (error, movies) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(movies);
+    res.status(200).json(movies);
   });
 };
 
