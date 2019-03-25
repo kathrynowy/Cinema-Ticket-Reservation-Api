@@ -1,51 +1,69 @@
-const mongoose = require('mongoose'),
-  Session = mongoose.model('Session');
-
+const mongoose = require('mongoose');
+Session = mongoose.model('Session');
 
 function listSessions(req, res) {
-  Session.find({}, function (error, session) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(session);
-  });
+  Session.find()
+    .then(session => res.send(session))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong while retrieving sessions."
+      });
+    });
 };
 
 function readSession(req, res) {
-  Session.find({ movieId: req.params.id }, function (error, session) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(session);
-  });
+  Session.find({ movieId: req.params.id })
+    .then(session => res.send(session))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong while retrieving sessions."
+      });
+    });
 };
 
 function createSession(req, res) {
   const newSession = new Session(req.body);
-  newSession.save(function (error, session) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(session);
-  });
+  newSession.save()
+    .then(data => res.send(data))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong while creating sessions."
+      });
+    });
 };
 
 function updateSession(req, res) {
-  Session.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (error, session) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(session);
-  });
+  Session.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then(session => {
+      if (!session) {
+        return res.status(404).send({
+          message: "Session not found with id " + req.params.id
+        });
+      }
+      res.send(session)
+    })
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong updating session with id " + req.params.id
+      });
+    });
 };
 
 function deleteSession(req, res) {
-  Session.remove({ id: req.params.id }, function (error, session) {
-    if (error) {
-      res.send(error);
-    }
-    res.json({ message: 'Session successfully deleted' });
-  });
+  Session.findByIdAndRemove(req.params.id)
+    .then(session => {
+      if (!session) {
+        return res.status(404).send({
+          message: "Session not found with id " + req.params.id
+        });
+      }
+      res.send({ message: "Session deleted successfully!" });
+    })
+    .catch(error => {
+      return res.status(500).send({
+        message: "Could not delete product with id " + req.params.id
+      });
+    });
 };
 
 module.exports = {

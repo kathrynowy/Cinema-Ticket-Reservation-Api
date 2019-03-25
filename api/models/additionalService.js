@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const AdditionalServiceSchema = new Schema({
-  cinemaId: String,
+  cinemaId: { type: Schema.Types.ObjectId, ref: 'Cinema' },
   services: [
     {
       name: String,
