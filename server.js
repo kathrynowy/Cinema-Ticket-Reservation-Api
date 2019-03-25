@@ -3,12 +3,12 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const toJson = require('@meanie/mongoose-to-json');
 const errorHandlers = require('./api/errorHandlers/index');
-
+const routes = require('./api/routes/index');
+const cors = require('cors');
 
 mongoose.plugin(toJson);
 
-const routes = require('./api/routes/index');
-const cors = require('cors');
+
 
 const app = express();
 const db = require('./api/utils/DataBaseUtils').setUpConnection();

@@ -3,49 +3,68 @@ Cinema = mongoose.model('Cinema');
 
 
 function listСinemas(req, res) {
-  Cinema.find({}, function (error, cinemas) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(cinemas);
-  });
+  Cinema.find()
+    .then(cinemas => res.send(cinemas))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong while retrieving cinemas."
+      });
+    });
 };
 
 function readСinema(req, res) {
-  Cinema.findById(req.params.id, function (error, cinema) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(cinema);
-  });
+  Cinema.findById(req.params.id)
+    .then(result => res.send(result))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong while reading cinemas."
+      });
+    });
 };
 
 function createСinema(req, res) {
   const newСinema = new Cinema(req.body);
-  newСinema.save(function (error, cinema) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(cinema);
-  });
+  newСinema.save()
+    .then(result => res.send(result))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong while creating cinemas."
+      });
+    });
 };
 
 function updateCinema(req, res) {
-  Cinema.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (error, cinema) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(cinema);
-  });
+  Cinema.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then(cinema => {
+      if (!cinema) {
+        return res.status(404).send({
+          message: "Cinema not found with id " + req.params.id
+        });
+      }
+      res.send(cinema)
+    })
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong updating cinema with id " + req.params.id
+      });
+    });
 };
 
 function deleteСinema(req, res) {
-  Cinema.remove({ id: req.params.id }, function (error, cinema) {
-    if (error) {
-      res.send(error);
-    }
-    res.json({ message: 'Cinema successfully deleted' });
-  });
+  Cinema.findByIdAndRemove(req.params.id)
+    .then(cinema => {
+      if (!cinema) {
+        return res.status(404).send({
+          message: "Session not found with id " + req.params.id
+        });
+      }
+      res.send({ message: "Cinema deleted successfully!" });
+    })
+    .catch(error => {
+      return res.status(500).send({
+        message: "Could not delete cinema with id " + req.params.id
+      });
+    });
 };
 
 module.exports = {
