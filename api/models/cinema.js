@@ -3,12 +3,16 @@ const Schema = mongoose.Schema;
 
 const CinemaSchema = new Schema({
   id: Schema.Types.ObjectId,
-  name: {
+  city: {
     type: String,
     required: true,
     default: ''
   },
-  halls: [{ type: Schema.Types.ObjectId, ref: 'Hall' }],
+  name: {
+    type: String,
+    required: true,
+    default: ''
+  }
 });
 
 

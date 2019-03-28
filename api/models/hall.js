@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const HallSchema = new Schema({
   cinemaId: { type: Schema.Types.ObjectId, ref: 'Cinema' },
   id: Schema.Types.ObjectId,
+  name: String,
   hall: [
     {
       row: Number,
