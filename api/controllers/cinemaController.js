@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 Cinema = mongoose.model('Cinema');
-
+Hall = mongoose.model('Hall');
 
 function listСinemas(req, res) {
   Cinema.find()
@@ -11,6 +11,27 @@ function listСinemas(req, res) {
       });
     });
 };
+
+async function addCinemaWithHalls(req, res) {
+  try {
+    const halls = req.body.halls;
+    const newСinema = new Cinema(req.body.cinema);
+    const cinema = await newСinema.save();
+    const newHalls = halls.map(hall => {
+      return { cinemaId: cinema._id, hall: hall.hall, name: hall.name }
+    });
+    const insertHalls = await Hall.insertMany(newHalls);
+    const result = {
+      cinema,
+      halls: insertHalls
+    }
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || "Something wrong while creating cinemas and halls."
+    });
+  };
+}
 
 function readСinema(req, res) {
   Cinema.findById(req.params.id)
@@ -72,5 +93,6 @@ module.exports = {
   readСinema,
   createСinema,
   deleteСinema,
-  updateCinema
+  updateCinema,
+  addCinemaWithHalls
 }
