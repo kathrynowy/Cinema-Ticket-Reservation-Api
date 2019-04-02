@@ -14,6 +14,9 @@ module.exports = function (app) {
   app.route('/cinemas-halls')
     .post(cinemaController.addCinemaWithHalls);
 
+  app.route('/cinemas/city/:city')
+    .get(cinemaController.getCinemasByCity);
+
   app.route('/cinemas/:id')
     .get(cinemaController.readСinema)
     .put(cinemaController.updateCinema)

@@ -7,6 +7,7 @@ function listSessions(req, res) {
     .populate('hallId')
     .populate('movieId')
     .then(session => {
+      console.log(session);
       res.send(session)
     })
     .catch(error => {
