@@ -13,11 +13,8 @@ function listСinemas(req, res) {
 };
 
 function getCinemasByCity(req, res) {
-  Cinema.find({ city: req.params.city })
-    .then(cinemas => {
-      console.log(cinemas);
-      res.send(cinemas);
-    })
+  Cinema.find({ city: req.body.city })
+    .then(cinemas => res.send(cinemas))
     .catch(error => {
       res.status(500).send({
         message: error.message || "Something wrong while retrieving cinemas."

@@ -14,7 +14,7 @@ module.exports = function (app) {
   app.route('/cinemas-halls')
     .post(cinemaController.addCinemaWithHalls);
 
-  app.route('/cinemas/city/:city')
+  app.route('/cinemas/city')
     .get(cinemaController.getCinemasByCity);
 
   app.route('/cinemas/:id')
