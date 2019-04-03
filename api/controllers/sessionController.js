@@ -6,10 +6,7 @@ function listSessions(req, res) {
     .populate('cinemaId')
     .populate('hallId')
     .populate('movieId')
-    .then(session => {
-      console.log(session);
-      res.send(session)
-    })
+    .then(session => res.send(session))
     .catch(error => {
       res.status(500).send({
         message: error.message || "Something wrong while retrieving sessions."
@@ -18,7 +15,7 @@ function listSessions(req, res) {
 };
 
 function readSession(req, res) {
-  Session.find({ movieId: req.params.id })
+  Session.findById(req.params.id)
     .then(session => res.send(session))
     .catch(error => {
       res.status(500).send({
