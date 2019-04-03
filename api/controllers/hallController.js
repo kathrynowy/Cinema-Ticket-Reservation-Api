@@ -24,7 +24,7 @@ function readHall(req, res) {
 
 function findHalls(req, res) {
   Hall.find({ "cinemaId": req.params.id })
-    .then(result => { console.log(result); return res.send(result) })
+    .then(result => res.send(result))
     .catch(error => {
       res.status(500).send({
         message: error.message || "Something wrong while reading halls."
@@ -35,7 +35,7 @@ function findHalls(req, res) {
 function createHall(req, res) {
   const newHall = new Hall(req.body);
   newHall.save()
-    .then(result => { console.log(result); return res.send(result) })
+    .then(result => res.send(result))
     .catch(error => {
       res.status(500).send({
         message: error.message || "Something wrong while creating halls."

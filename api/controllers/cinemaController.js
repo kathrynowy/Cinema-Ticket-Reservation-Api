@@ -12,7 +12,7 @@ function listСinemas(req, res) {
     });
 };
 
-async function addCinemaWithHalls(req, res) {
+async function createСinema(req, res) {
   try {
     const halls = req.body.halls;
     const newСinema = new Cinema(req.body.cinema);
@@ -39,17 +39,6 @@ function readСinema(req, res) {
     .catch(error => {
       res.status(500).send({
         message: error.message || "Something wrong while reading cinemas."
-      });
-    });
-};
-
-function createСinema(req, res) {
-  const newСinema = new Cinema(req.body);
-  newСinema.save()
-    .then(result => res.send(result))
-    .catch(error => {
-      res.status(500).send({
-        message: error.message || "Something wrong while creating cinemas."
       });
     });
 };
@@ -93,6 +82,5 @@ module.exports = {
   readСinema,
   createСinema,
   deleteСinema,
-  updateCinema,
-  addCinemaWithHalls
+  updateCinema
 }
