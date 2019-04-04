@@ -37,6 +37,9 @@ function createSession(req, res) {
 
 function updateSession(req, res) {
   Session.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .populate('cinemaId')
+    .populate('hallId')
+    .populate('movieId')
     .then(session => {
       if (!session) {
         return res.status(404).send({
