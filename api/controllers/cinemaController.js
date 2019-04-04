@@ -91,7 +91,6 @@ function deleteСinema(req, res) {
 module.exports = {
   listСinemas,
   readСinema,
-  createСinema,
   deleteСinema,
   updateCinema,
   addCinemaWithHalls

@@ -8,9 +8,6 @@ module.exports = function (app) {
 
   app.route('/cinemas')
     .get(cinemaController.listСinemas)
-    .post(cinemaController.createСinema);
-
-  app.route('/cinemas-halls')
     .post(cinemaController.addCinemaWithHalls);
 
   app.route('/cinemas/:id')
