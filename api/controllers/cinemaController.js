@@ -54,17 +54,6 @@ function readСinema(req, res) {
     });
 };
 
-function createСinema(req, res) {
-  const newСinema = new Cinema(req.body);
-  newСinema.save()
-    .then(result => res.send(result))
-    .catch(error => {
-      res.status(500).send({
-        message: error.message || "Something wrong while creating cinemas."
-      });
-    });
-};
-
 function updateCinema(req, res) {
   Cinema.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then(cinema => {
