@@ -56,20 +56,52 @@ function updateSession(req, res) {
 };
 
 function deleteSession(req, res) {
-  Session.findByIdAndRemove(req.params.id)
-    .then(session => {
-      if (!session) {
-        return res.status(404).send({
-          message: "Session not found with id " + req.params.id
+  if (req.body.session.times.length > 1) {
+    const newTimes = req.body.session.times.filter(time => time !== req.body.currentTime);
+    const newSession = {
+      movieId: req.body.session.movieId.id,
+      cinemaId: req.body.session.cinemaId.id,
+      hallId: req.body.session.hallId.id,
+      id: req.body.session.id,
+      times: newTimes
+    }
+
+    req.body.session = newSession;
+
+    Session.findByIdAndUpdate(req.params.id, req.body.session, { new: true })
+      .populate('cinemaId')
+      .populate('hallId')
+      .populate('movieId')
+      .then(session => {
+        if (!session) {
+          return res.status(404).send({
+            message: "Session not found with id " + req.params.id
+          });
+        }
+        res.send(session)
+      })
+      .catch(error => {
+        res.status(500).send({
+          message: error.message || "Something wrong updating session with id " + req.params.id
         });
-      }
-      res.send({ message: "Session deleted successfully!" });
-    })
-    .catch(error => {
-      return res.status(500).send({
-        message: "Could not delete product with id " + req.params.id
       });
-    });
+  }
+  else {
+    Session.findByIdAndRemove(req.params.id)
+      .then(session => {
+        if (!session) {
+          return res.status(404).send({
+            message: "Session not found with id " + req.params.id
+          });
+        }
+        res.send({ message: "Session deleted successfully!" });
+      })
+      .catch(error => {
+        return res.status(500).send({
+          message: "Could not delete product with id " + req.params.id
+        });
+      });
+  }
 };
 
 module.exports = {
