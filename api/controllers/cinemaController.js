@@ -3,16 +3,27 @@ Cinema = mongoose.model('Cinema');
 Hall = mongoose.model('Hall');
 
 function listСinemas(req, res) {
-  Cinema.find()
-    .then(cinemas => res.send(cinemas))
-    .catch(error => {
-      res.status(500).send({
-        message: error.message || "Something wrong while retrieving cinemas."
+  if (req.query.city) {
+    Cinema.find({ city: req.query.city })
+      .then(cinemas => res.send(cinemas))
+      .catch(error => {
+        res.status(500).send({
+          message: error.message || "Something wrong while retrieving cinemas."
+        });
       });
-    });
+  } else {
+    Cinema.find()
+      .then(cinemas => res.send(cinemas))
+      .catch(error => {
+        res.status(500).send({
+          message: error.message || "Something wrong while retrieving cinemas."
+        });
+      });
+  }
+
 };
 
-async function createСinema(req, res) {
+async function addCinemaWithHalls(req, res) {
   try {
     const halls = req.body.halls;
     const newСinema = new Cinema(req.body.cinema);
@@ -80,7 +91,7 @@ function deleteСinema(req, res) {
 module.exports = {
   listСinemas,
   readСinema,
-  createСinema,
   deleteСinema,
-  updateCinema
+  updateCinema,
+  addCinemaWithHalls
 }

@@ -12,6 +12,11 @@ const CinemaSchema = new Schema({
     type: String,
     required: true,
     default: ''
+  },
+  name: {
+    type: String,
+    required: true,
+    default: ''
   }
 });
 
