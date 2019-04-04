@@ -14,9 +14,6 @@ module.exports = function (app) {
   app.route('/cinemas-halls')
     .post(cinemaController.addCinemaWithHalls);
 
-  app.route('/cinemas/city')
-    .get(cinemaController.getCinemasByCity);
-
   app.route('/cinemas/:id')
     .get(cinemaController.readСinema)
     .put(cinemaController.updateCinema)
@@ -49,7 +46,7 @@ module.exports = function (app) {
     .put(hallController.updateHall)
     .delete(hallController.deleteHall);
 
-  app.route('/halls/cinema/:id')
+  app.route('/cinema/:id/halls')
     .get(hallController.findHalls);
 
   app.route('/additionalServices')
