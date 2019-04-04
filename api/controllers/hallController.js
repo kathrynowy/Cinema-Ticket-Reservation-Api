@@ -22,6 +22,16 @@ function readHall(req, res) {
     });
 };
 
+function findHalls(req, res) {
+  Hall.find({ "cinemaId": req.params.id })
+    .then(result => res.send(result))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong while reading halls."
+      });
+    });
+};
+
 function createHall(req, res) {
   const newHall = new Hall(req.body);
   newHall.save()
@@ -72,5 +82,6 @@ module.exports = {
   readHall,
   createHall,
   deleteHall,
-  updateHall
+  updateHall,
+  findHalls
 }

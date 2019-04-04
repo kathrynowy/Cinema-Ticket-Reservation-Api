@@ -43,6 +43,9 @@ module.exports = function (app) {
     .put(hallController.updateHall)
     .delete(hallController.deleteHall);
 
+  app.route('/cinema/:id/halls')
+    .get(hallController.findHalls);
+
   app.route('/additionalServices')
     .get(additionalServiceController.listServices)
     .post(additionalServiceController.createService);

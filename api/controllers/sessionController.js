@@ -3,7 +3,12 @@ Session = mongoose.model('Session');
 
 function listSessions(req, res) {
   Session.find()
-    .then(session => res.send(session))
+    .populate('cinemaId')
+    .populate('hallId')
+    .populate('movieId')
+    .then(session => {
+      res.send(session)
+    })
     .catch(error => {
       res.status(500).send({
         message: error.message || "Something wrong while retrieving sessions."

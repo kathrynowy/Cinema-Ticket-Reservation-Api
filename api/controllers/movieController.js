@@ -30,6 +30,7 @@ function createMovie(req, res) {
       res.status(500).send({
         message: error.message || "Something wrong while creating movies."
       });
+      res.send(error);
     });
 };
 
