@@ -64,6 +64,7 @@ passport.use('local-signup', new LocalStrategy({
           .then(() => {
             req.body.token = services.generateToken(newUser._id);
             req.body.username = newUser.username;
+            req.body.id = newUser.id;
           })
           .catch(err => console.log(err));
 

@@ -4,11 +4,11 @@ const passport = require('passport');
 
 
 function signUp(req, res) {
-  return res.status(200).json({ username: req.body.email, token: req.body.token });
+  return res.status(200).json({ username: req.body.email, token: req.body.token, id: req.body.id });
 };
 
 function login(req, res) {
-  return res.status(200).json({ username: req.body.email, token: req.body.token });
+  return res.status(200).json({ username: req.body.email, token: req.body.token, id: req.body.id });
 }
 
 function usersList(req, res) {
