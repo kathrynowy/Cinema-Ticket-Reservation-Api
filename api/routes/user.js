@@ -4,9 +4,10 @@ const router = express.Router();
 
 const UserController = require('../controllers/userController');
 
-router.post('/signup', passport.authenticate('local-signup', { session: false }), UserController.signUp);
+router.post('/signup', UserController.signUp);
 router.post('/login', passport.authenticate('local-login', { session: false }), UserController.login);
 router.get('/users', UserController.usersList);
+router.post('/user/:id', passport.authenticate('jwt', { session: false }), UserController.currentUser);
 router.get('/logout', function (req, res) {
   res.status(200).send({ auth: false, token: null });
 });

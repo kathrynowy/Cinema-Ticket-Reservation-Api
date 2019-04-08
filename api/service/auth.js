@@ -5,7 +5,7 @@ exports.generateToken = (id) => {
   const token = jwt.sign(
     {
       id,
-      exp: Math.floor(Date.now() / 1000) + parseInt(360000000)
+      expiresIn: '1d'
     },
     'mySecretKey');
   return `bearer ${token}`;

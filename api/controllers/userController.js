@@ -1,14 +1,33 @@
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
+const services = require('../service/auth');
 
 
-function signUp(req, res) {
-  return res.status(200).json({ username: req.body.email, token: req.body.token, id: req.body.id });
+async function signUp(req, res) {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (user) {
+    return res.status(500).json({ error: "email must be unick" });
+  } else {
+    const newUser = new User({
+      ...req.body,
+      email: req.body.email,
+      username: req.body.username,
+      password: services.generateHash(req.body.password)
+    });
+
+    newUser.save()
+      .then((user) => res.send(user))
+      .catch(error => {
+        res.status(500).send({
+          message: error.message || "Something wrong while signing up."
+        });
+        res.send(error);
+      });
+  }
 };
 
 function login(req, res) {
-  return res.status(200).json({ username: req.body.email, token: req.body.token, id: req.body.id });
+  return res.status(200).json({ email: req.body.email, token: req.body.token, id: req.user.id });
 }
 
 function usersList(req, res) {
@@ -17,8 +36,20 @@ function usersList(req, res) {
     .catch(err => res.status(500).json({ error: err.message }));
 };
 
+
+function currentUser(req, res) {
+  User.findById(req.user.id)
+    .then(result => res.send(result))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something wrong while reading user."
+      });
+    });
+};
+
 module.exports = {
   signUp,
   login,
-  usersList
+  usersList,
+  currentUser
 }
