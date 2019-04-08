@@ -13,11 +13,12 @@ const CinemaSchema = new Schema({
     required: true,
     default: ''
   },
-  name: {
-    type: String,
-    required: true,
-    default: ''
-  }
+  additionalServices: [
+    {
+      name: String,
+      cost: Number
+    }
+  ]
 });
 
 

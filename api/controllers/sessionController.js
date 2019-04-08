@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 Session = mongoose.model('Session');
 
+
 function listSessions(req, res) {
   Session.find()
     .populate('cinemaId')
