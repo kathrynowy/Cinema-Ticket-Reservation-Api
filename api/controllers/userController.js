@@ -36,7 +36,6 @@ function usersList(req, res) {
     .catch(err => res.status(500).json({ error: err.message }));
 };
 
-
 function currentUser(req, res) {
   User.findById(req.user.id)
     .then(result => res.send(result))

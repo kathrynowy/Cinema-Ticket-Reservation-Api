@@ -20,7 +20,6 @@ function listСinemas(req, res) {
         });
       });
   }
-
 };
 
 async function addCinemaWithHalls(req, res) {
