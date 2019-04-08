@@ -15,12 +15,10 @@ passport.use('local-login', new LocalStrategy(
       const user = await User.findOne({ email });
 
       if (!user) {
-        req.body.message = 'No user found';
         return done(null, false, { message: 'No user found' });
       }
 
       if (!user.validPassword(password)) {
-        req.body.message = 'Wrong password';
         return done(null, false, { message: 'Wrong password' });
       }
 

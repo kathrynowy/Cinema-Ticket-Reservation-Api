@@ -4,7 +4,8 @@ const passport = require('passport');
 
 const ticketController = require('../controllers/ticketController');
 
-router.get('/buyTickets', ticketController.listBoughtTickets);
-router.put('/buyTickets', passport.authenticate('jwt', { session: false }), ticketController.buyTickets);
+router.route('/buyTickets')
+  .get(ticketController.listBoughtTickets)
+  .put(passport.authenticate('jwt', { session: false }), ticketController.buyTickets);
 
 module.exports = router;
