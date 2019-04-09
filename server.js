@@ -17,6 +17,7 @@ require('./api/models/session');
 require('./api/models/hall');
 require('./api/models/boughtTicket');
 require('./api/models/user');
+require('./api/models/selectedSeat');
 require('./api/passport/index');
 
 mongoose.Promise = global.Promise;

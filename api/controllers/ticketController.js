@@ -13,7 +13,7 @@ function listBoughtTickets(req, res) {
 };
 
 function buyTickets(req, res, next) {
-  BoughtTicket.findByIdAndUpdate("5c910673790c625dc8ec009e", { $push: { boughtTickets: req.body.tickets } })
+  BoughtTicket.insertMany(req.body.tickets)
     .then(result => res.send(result))
     .catch(error => {
       res.status(500).send({
