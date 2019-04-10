@@ -27,7 +27,7 @@ async function signUp(req, res) {
 };
 
 function login(req, res) {
-  return res.status(200).json({ email: req.body.email, token: req.body.token, id: req.user.id });
+  return res.status(200).json({ email: req.body.email, token: req.body.token, id: req.user.id, isAdmin: req.user.isAdmin });
 }
 
 function usersList(req, res) {
