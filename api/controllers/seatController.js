@@ -1,56 +1,83 @@
 const mongoose = require('mongoose');
 SelectedSeat = mongoose.model('SelectedSeat');
+BoughtTicket = mongoose.model('BoughtTicket');
+
+
+let timer = '';
 
 async function selectSeat(req, res) {
-  const seat = await SelectedSeat.findOne({
+  const selectedSeat = {
+    cinemaId: req.body.cinemaId,
+    hallId: req.body.hallId,
+    movieId: req.body.movieId,
+    time: req.body.time,
+    row: req.body.row,
+    seat: req.body.seat,
+    userId: req.body.userId
+  };
+  const seatForCompare = {
     cinemaId: req.body.cinemaId,
     hallId: req.body.hallId,
     movieId: req.body.movieId,
     time: req.body.time,
     row: req.body.row,
     seat: req.body.seat
-  });
-
-  if (seat) {
-    SelectedSeat.findByIdAndRemove(seat.id)
-      .then(result => {
-        res.send(result)
-      })
-      .catch(error => {
+  }
+  const boughtSeat = await BoughtTicket.findOne(seatForCompare);
+  if (!boughtSeat) {
+    const seat = await SelectedSeat.findOne(seatForCompare);
+    if (seat) {
+      if (selectedSeat.userId == seat.userId) {
+        SelectedSeat.findByIdAndRemove(seat.id)
+          .then(result => {
+            res.send(result)
+          })
+          .catch(error => {
+            res.status(500).send({
+              message: "Something wrong while deleting seat."
+            });
+          });
+      } else {
         res.status(500).send({
           message: "Something wrong while deleting seat."
         });
-      });
-  } else {
-    const newSeat = new SelectedSeat(req.body);
-    newSeat.save()
-      .then(result => {
-        const timer = setTimeout(() => deleteSeats(result.userId, req, res), 8000);
-        res.send(result)
-      })
-      .catch(error => {
-        res.status(500).send({
-          message: "Something wrong while selecting seat."
+      }
+    } else {
+      const newSeat = new SelectedSeat(selectedSeat);
+      newSeat.save()
+        .then(result => {
+          timer = setTimeout(() => deleteSeats(result.userId, req, res), 1200000);
+          res.send(result);
+        })
+        .catch(error => {
+          res.status(500).send({
+            message: "Something wrong while selecting seat."
+          });
         });
-      });
+    }
+  } else {
+    res.status(500).send({
+      message: "Something wrong while selecting seat."
+    });
   }
 };
 
 function deleteSeats(userId) {
-  console.log(userId + ' userId');
-  SelectedSeat.deleteMany({ userId })
-    .then(result => {
-      console.log('deleted success ' + result)
-    })
-    .catch(error => console.log('error ' + error))
+  SelectedSeat.deleteMany({ userId });
 }
 
+
 function clearBooking(req, res) {
-  selectSeat.deleteMany({ userId: req.body.userId })
+  const userId = req.body.userId;
+  SelectedSeat.deleteMany({ userId })
     .then(result => {
-      console.log('deleted success ' + result)
+      res.send(result);
     })
-    .catch(error => console.log('error ' + error))
+    .catch(error => {
+      res.status(500).send({
+        message: error.message || "Something is wrong"
+      })
+    })
 }
 
 function listSelectedSeats(req, res) {
