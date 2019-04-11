@@ -13,7 +13,8 @@ async function selectSeat(req, res) {
     time: req.body.time,
     row: req.body.row,
     seat: req.body.seat,
-    userId: req.body.userId
+    userId: req.body.userId,
+    cost: req.body.cost
   };
   const seatForCompare = {
     cinemaId: req.body.cinemaId,
