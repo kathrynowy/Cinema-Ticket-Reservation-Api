@@ -3,17 +3,32 @@ BoughtTicket = mongoose.model('BoughtTicket');
 
 
 function listBoughtTickets(req, res) {
-  BoughtTicket.find()
-    .then(tickets => res.send(tickets))
-    .catch(error => {
-      res.status(500).send({
-        message: error.message || "Something wrong while retrieving tickets."
+  if (req.query.info) {
+    BoughtTicket.find({ userId: req.user.id })
+      .populate('cinemaId')
+      .populate('hallId')
+      .populate('movieId')
+      .then(tickets => res.send(tickets))
+      .catch(error => {
+        res.status(500).send({
+          message: error.message || "Something wrong while retrieving tickets."
+        });
       });
-    });
+  } else {
+    BoughtTicket.find()
+      .then(tickets => res.send(tickets))
+      .catch(error => {
+        res.status(500).send({
+          message: error.message || "Something wrong while retrieving tickets."
+        });
+      });
+  }
 };
 
+
+
 function buyTickets(req, res, next) {
-  BoughtTicket.findByIdAndUpdate("5c910673790c625dc8ec009e", { $push: { boughtTickets: req.body.tickets } })
+  BoughtTicket.insertMany(req.body.tickets)
     .then(result => res.send(result))
     .catch(error => {
       res.status(500).send({

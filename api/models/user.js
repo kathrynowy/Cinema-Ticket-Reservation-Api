@@ -14,6 +14,10 @@ var UserSchema = mongoose.Schema({
   email: {
     type: String,
     required: true
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true
   }
 });
 
