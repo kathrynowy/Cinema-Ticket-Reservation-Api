@@ -58,7 +58,7 @@ io.on('connection', function (socket) {
     console.log(seat);
     seatController.selectSeatt(seat)
       .then(toggledSeat => {
-        socket.broadcast.emit('TOGGLE_SEAT', toggledSeat);
+        socket.broadcast.emit('BOUGHT_SEAT', toggledSeat);
         socket.emit('TOGGLE_SEAT', toggledSeat);
       })
       .catch(err => console.log(err))
