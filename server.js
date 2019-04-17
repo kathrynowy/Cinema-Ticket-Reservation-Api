@@ -5,10 +5,13 @@ const toJson = require('@meanie/mongoose-to-json');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const port = 8080;
+
 
 mongoose.plugin(toJson);
-
-const app = express();
 
 require('./api/utils/DataBaseUtils').setUpConnection();
 require('./api/models/cinema');
@@ -26,14 +29,12 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
 app.use(cors());
 
 app.use('/', require('./api/routes/index'));
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.use((error, req, res, next) => {
   if (error) {
@@ -46,7 +47,26 @@ app.use((error, req, res, next) => {
   }
 });
 
-const port = 8080;
-app.listen(port);
+server.listen(port);
+
+const seatController = require('./api/controllers/seatController');
+
+io.on('connection', function (socket) {
+  console.log('Client connected...');
+
+  socket.on('SEND_TOGGLES_SEAT_TO_SERVER', seat => {
+    console.log(seat);
+    seatController.selectSeatt(seat)
+      .then(toggledSeat => {
+        socket.broadcast.emit('TOGGLE_SEAT', toggledSeat);
+        socket.emit('TOGGLE_SEAT', toggledSeat);
+      })
+      .catch(err => console.log(err))
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected')
+  })
+})
 
 console.log('server started on: ' + port);

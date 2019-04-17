@@ -5,7 +5,55 @@ BoughtTicket = mongoose.model('BoughtTicket');
 
 let timer = '';
 
-async function selectSeat(req, res) {
+async function selectSeatt(seat) {
+  return new Promise(async function (resolve, reject) {
+    const selectedSeat = {
+      cinemaId: seat.cinemaId,
+      hallId: seat.hallId,
+      movieId: seat.movieId,
+      time: seat.time,
+      row: seat.row,
+      seat: seat.seat,
+      userId: seat.userId,
+      cost: seat.cost
+    };
+    const seatForCompare = {
+      cinemaId: seat.cinemaId,
+      hallId: seat.hallId,
+      movieId: seat.movieId,
+      time: seat.time,
+      row: seat.row,
+      seat: seat.seat
+    }
+    const boughtSeat = await BoughtTicket.findOne(seatForCompare);
+    if (!boughtSeat) {
+      const seat = await SelectedSeat.findOne(seatForCompare);
+      if (seat) {
+        if (selectedSeat.userId == seat.userId) {
+          SelectedSeat.findByIdAndRemove(seat.id)
+            .then(result => resolve(result))
+            .catch(error => reject(error));
+        } else {
+          reject('something is wrong!');
+        }
+      } else {
+        const newSeat = new SelectedSeat(selectedSeat);
+        newSeat.save()
+          .then(result => {
+            timer = setTimeout(() => deleteSeats(result.userId), 1200000);
+            resolve(result);
+          })
+          .catch(error => reject(error));
+      }
+    } else {
+      reject('something is wrong!!!');
+    }
+  })
+};
+
+
+
+/* async function selectSeat(req, res) {
   const selectedSeat = {
     cinemaId: req.body.cinemaId,
     hallId: req.body.hallId,
@@ -61,7 +109,7 @@ async function selectSeat(req, res) {
       message: "Something wrong while selecting seat."
     });
   }
-};
+}; */
 
 function deleteSeats(userId) {
   SelectedSeat.deleteMany({ userId });
@@ -97,7 +145,8 @@ function listSelectedSeats(req, res) {
 };
 
 module.exports = {
-  selectSeat,
+  /* selectSeat, */
   listSelectedSeats,
-  clearBooking
+  clearBooking,
+  selectSeatt
 }
