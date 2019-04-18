@@ -5,7 +5,7 @@ BoughtTicket = mongoose.model('BoughtTicket');
 
 let timer = '';
 
-async function selectSeatt(seat) {
+async function selectSeat(seat) {
   return new Promise(async function (resolve, reject) {
     const selectedSeat = {
       cinemaId: seat.cinemaId,
@@ -51,70 +51,9 @@ async function selectSeatt(seat) {
   })
 };
 
-
-
-/* async function selectSeat(req, res) {
-  const selectedSeat = {
-    cinemaId: req.body.cinemaId,
-    hallId: req.body.hallId,
-    movieId: req.body.movieId,
-    time: req.body.time,
-    row: req.body.row,
-    seat: req.body.seat,
-    userId: req.body.userId,
-    cost: req.body.cost
-  };
-  const seatForCompare = {
-    cinemaId: req.body.cinemaId,
-    hallId: req.body.hallId,
-    movieId: req.body.movieId,
-    time: req.body.time,
-    row: req.body.row,
-    seat: req.body.seat
-  }
-  const boughtSeat = await BoughtTicket.findOne(seatForCompare);
-  if (!boughtSeat) {
-    const seat = await SelectedSeat.findOne(seatForCompare);
-    if (seat) {
-      if (selectedSeat.userId == seat.userId) {
-        SelectedSeat.findByIdAndRemove(seat.id)
-          .then(result => {
-            res.send(result)
-          })
-          .catch(error => {
-            res.status(500).send({
-              message: "Something wrong while deleting seat."
-            });
-          });
-      } else {
-        res.status(500).send({
-          message: "Something wrong while deleting seat."
-        });
-      }
-    } else {
-      const newSeat = new SelectedSeat(selectedSeat);
-      newSeat.save()
-        .then(result => {
-          timer = setTimeout(() => deleteSeats(result.userId, req, res), 1200000);
-          res.send(result);
-        })
-        .catch(error => {
-          res.status(500).send({
-            message: "Something wrong while selecting seat."
-          });
-        });
-    }
-  } else {
-    res.status(500).send({
-      message: "Something wrong while selecting seat."
-    });
-  }
-}; */
-
 function deleteSeats(userId) {
   SelectedSeat.deleteMany({ userId });
 }
-
 
 function clearBooking(req, res) {
   const userId = req.body.userId;
@@ -145,8 +84,7 @@ function listSelectedSeats(req, res) {
 };
 
 module.exports = {
-  /* selectSeat, */
   listSelectedSeats,
   clearBooking,
-  selectSeatt
+  selectSeat
 }
