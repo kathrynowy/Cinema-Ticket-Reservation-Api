@@ -55,7 +55,6 @@ io.on('connection', function (socket) {
   console.log('Client connected...');
 
   socket.on('SEND_TOGGLES_SEAT_TO_SERVER', seat => {
-    console.log(seat);
     seatController.selectSeat(seat)
       .then(toggledSeat => {
         socket.broadcast.emit('BOUGHT_SEAT', toggledSeat);
