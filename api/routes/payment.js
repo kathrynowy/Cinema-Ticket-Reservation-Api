@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const stripe = require("stripe")("sk_test_M1KphvJynEbt12mwm5t8sn0z00V2gXC4mY");
+const stripeKey = require('../../config').stripeKey;
+
+const stripe = require("stripe")(stripeKey);
 
 router.post("/payment", async (req, res) => {
   try {

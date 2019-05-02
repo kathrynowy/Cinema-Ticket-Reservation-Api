@@ -8,7 +8,6 @@ const passport = require('passport');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-const stripe = require("stripe")("pk_test_A8lmf6gBkwNhNx21XyRWQQXH00QQGcbT1R");
 const port = 8080;
 
 
