@@ -4,6 +4,7 @@ BoughtTicket = mongoose.model('BoughtTicket');
 
 
 let timer = '';
+const millisecondsForTimer = 1200000;
 
 async function selectSeat(seat) {
   const selectedSeat = {
@@ -37,7 +38,7 @@ async function selectSeat(seat) {
       const newSeat = new SelectedSeat(selectedSeat);
       return newSeat.save()
         .then(result => {
-          timer = setTimeout(() => deleteSeats(result.userId), 1200000);
+          timer = setTimeout(() => deleteSeats(result.userId), millisecondsForTimer);
           return result;
         })
     }
