@@ -8,4 +8,7 @@ router.route('/buyTickets')
   .get(passport.authenticate('jwt', { session: false }), ticketController.listBoughtTickets)
   .put(passport.authenticate('jwt', { session: false }), ticketController.buyTickets);
 
+router.route('/deleteTickets')
+  .delete(ticketController.deleteAll);
+
 module.exports = router;

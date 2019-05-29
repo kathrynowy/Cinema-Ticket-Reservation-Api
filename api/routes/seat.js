@@ -8,4 +8,7 @@ router.route('/seats')
   .get(seatController.listSelectedSeats)
   .delete(seatController.clearBooking);
 
+router.route('/deleteSeats')
+  .delete(seatController.deleteAll);
+
 module.exports = router;

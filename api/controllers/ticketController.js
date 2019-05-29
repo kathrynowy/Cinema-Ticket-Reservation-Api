@@ -25,6 +25,15 @@ function listBoughtTickets(req, res) {
   }
 };
 
+function deleteAll(req, res) {
+  BoughtTicket.remove({})
+    .then(result => {
+      console.log('success');
+      res.send(result)
+    })
+    .catch(error => console.log(error));
+};
+
 
 
 function buyTickets(req, res, next) {
@@ -39,5 +48,6 @@ function buyTickets(req, res, next) {
 
 module.exports = {
   buyTickets,
-  listBoughtTickets
+  listBoughtTickets,
+  deleteAll
 }

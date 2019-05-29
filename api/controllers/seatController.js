@@ -79,8 +79,18 @@ function listSelectedSeats(req, res) {
     });
 };
 
+function deleteAll(req, res) {
+  SelectedSeat.remove({})
+    .then(result => {
+      console.log('success');
+      res.send(result)
+    })
+    .catch(error => console.log(error));
+};
+
 module.exports = {
   listSelectedSeats,
   clearBooking,
-  selectSeat
+  selectSeat,
+  deleteAll
 }
